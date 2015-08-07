@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/emoji_layout"
+        android:layout_width="match_parent"
+        android:layout_height="46dp" >
+
+        <TextView
+            android:id="@+id/emoji_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:clickable="true"
+            android:gravity="center"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="@string/emoji_send"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/emoji_imageview"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:src="@drawable/emoji_keyboard" />
+
+        <com.pikachu.emoji.CommentEditText
+            android:id="@+id/emoji_editview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/emoji_send"
+            android:layout_toRightOf="@id/emoji_imageview"
+            android:layout_marginTop="6dp"
+            android:focusable="true"
+            android:gravity="center|left"
+            android:inputType="text" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/emoji_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/emoji_layout"
+        android:background="#d9d7dd" />
+
+    <com.pikachu.emoji.EmojiBorad
+        android:id="@+id/emoji_board"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/emoji_divider"
+        android:visibility="gone" />
+
+</LinearLayout>
