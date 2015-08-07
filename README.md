@@ -31,7 +31,7 @@ If success,the result is :
 
 #Contribution
 
-If you find a bug or other questions,please send a pull request,thansk.
+If you find a bug or other questions,please send a pull request,thanks.
 
 
 
