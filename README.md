@@ -26,7 +26,8 @@ emojiView.attachActivity(this);
 ```
 
 If success,the result is :     
-![image](https://github.com/BinGoBinBin/EmojiForAndroid/raw/master/images/sample.png)
+
+<img src="https://github.com/BinGoBinBin/EmojiForAndroid/raw/master/images/sample.png" width="540" height="960">
 
 #Contribution
 
