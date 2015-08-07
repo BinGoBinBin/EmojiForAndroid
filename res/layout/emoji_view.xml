@@ -31,14 +31,14 @@
             android:paddingRight="8dp"
             android:src="@drawable/emoji_keyboard" />
 
-        <com.pikachu.emoji.CommentEditText
+        <com.pikachu.emoji.widget.CommentEditText
             android:id="@+id/emoji_editview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/emoji_send"
             android:layout_toRightOf="@id/emoji_imageview"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="4dp"
             android:focusable="true"
             android:gravity="center|left"
             android:inputType="text" />
@@ -51,7 +51,7 @@
         android:layout_below="@id/emoji_layout"
         android:background="#d9d7dd" />
 
-    <com.pikachu.emoji.EmojiBorad
+    <com.pikachu.emoji.widget.EmojiView
         android:id="@+id/emoji_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 	
-    <com.pikachu.emoji.EmojiView 
+    <com.pikachu.emoji.widget.EmojiBoard 
         android:id="@+id/emojiview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -20,6 +20,7 @@ import java.io.Serializable;
 
 /**
  * @author Hieu Rocker (rockerhieu@gmail.com)
+ * @author BinGoBinBin
  */
 public class EmojiBean implements Serializable {
     private static final long serialVersionUID = 1L;

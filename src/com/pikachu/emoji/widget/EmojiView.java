@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.pikachu.emoji;
+package com.pikachu.emoji.widget;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,13 +39,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.pikachu.emoji.EmojiBean;
+import com.pikachu.emoji.EmojiSource;
 import com.pikachu.emoji.utils.CommonUtils;
 import com.pikachu.emoji.utils.ResFinder;
 
 /**
  * Emoji borad
  */
-public class EmojiBorad extends LinearLayout implements OnPageChangeListener {
+public class EmojiView extends LinearLayout implements OnPageChangeListener {
 
     private static final int PAGE_SIZE = 20; // size of page
     public static final String DELETE_KEY = "delete";
@@ -60,7 +62,7 @@ public class EmojiBorad extends LinearLayout implements OnPageChangeListener {
     /**
      * @param context
      */
-    public EmojiBorad(Context context) {
+    public EmojiView(Context context) {
         super(context);
         init();
     }
@@ -69,7 +71,7 @@ public class EmojiBorad extends LinearLayout implements OnPageChangeListener {
      * @param context
      * @param attrs
      */
-    public EmojiBorad(Context context, AttributeSet attrs) {
+    public EmojiView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
@@ -79,7 +81,7 @@ public class EmojiBorad extends LinearLayout implements OnPageChangeListener {
      * @param attrs
      * @param defStyle
      */
-    public EmojiBorad(Context context, AttributeSet attrs, int defStyle) {
+    public EmojiView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
@@ -101,11 +103,11 @@ public class EmojiBorad extends LinearLayout implements OnPageChangeListener {
         addView(viewPager);
         ViewGroup container = createPointLinearlayout();
         List<EmojiPage> datas = new ArrayList<EmojiPage>();
-        int lens = People.DATA.length;
+        int lens = EmojiSource.DATA.length;
         int pages = lens / PAGE_SIZE; // 总共pages个页面
         for (int i = 0; i < pages; i++) {
             EmojiBean[] blocks = new EmojiBean[PAGE_SIZE + 1];
-            System.arraycopy(People.DATA, i * PAGE_SIZE, blocks, 0, blocks.length - 1);
+            System.arraycopy(EmojiSource.DATA, i * PAGE_SIZE, blocks, 0, blocks.length - 1);
             blocks[PAGE_SIZE] = EmojiBean.fromChars(DELETE_KEY);
             datas.add(new EmojiPage(getContext(), blocks)); // the last is
                                                             // delete icon
@@ -113,7 +115,7 @@ public class EmojiBorad extends LinearLayout implements OnPageChangeListener {
         // add remain emoji view
         if (pages * PAGE_SIZE < lens) {
             EmojiBean[] blocks = new EmojiBean[lens - pages * PAGE_SIZE];
-            System.arraycopy(People.DATA, pages * PAGE_SIZE, blocks, 0, blocks.length);
+            System.arraycopy(EmojiSource.DATA, pages * PAGE_SIZE, blocks, 0, blocks.length);
             datas.add(new EmojiPage(getContext(), blocks));
         }
 

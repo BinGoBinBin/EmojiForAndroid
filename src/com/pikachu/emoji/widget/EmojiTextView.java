@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-package com.pikachu.emoji;
+package com.pikachu.emoji.widget;
+
+import com.pikachu.emoji.EmojiHandler;
 
 import android.content.Context;
 import android.text.SpannableStringBuilder;

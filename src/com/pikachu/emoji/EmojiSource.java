@@ -19,7 +19,7 @@ package com.pikachu.emoji;
 /**
  * @author Hieu Rocker (rockerhieu@gmail.com)
  */
-public class People {
+public class EmojiSource {
     public static final EmojiBean[] DATA = new EmojiBean[]{
             EmojiBean.fromCodePoint(0x1f604),
             EmojiBean.fromCodePoint(0x1f603),

@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.pikachu.emoji;
+package com.pikachu.emoji.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

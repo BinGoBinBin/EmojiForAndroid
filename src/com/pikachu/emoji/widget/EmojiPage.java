@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.pikachu.emoji;
+package com.pikachu.emoji.widget;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -31,8 +31,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.pikachu.emoji.EmojiBorad.OnEmojiItemClickListener;
+import com.pikachu.emoji.EmojiAdapter;
+import com.pikachu.emoji.EmojiBean;
 import com.pikachu.emoji.utils.CommonUtils;
+import com.pikachu.emoji.widget.EmojiView.OnEmojiItemClickListener;
 
 /**
  * 每页的Emoji现实View，使用GridView来自展示
