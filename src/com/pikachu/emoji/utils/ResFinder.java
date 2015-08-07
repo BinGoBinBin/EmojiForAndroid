@@ -33,9 +33,8 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 /**
- * 
+ * @author BinGoBinBin 
  */
-
 public abstract class ResFinder {
     /**
      * @功能描述 : 资源类型

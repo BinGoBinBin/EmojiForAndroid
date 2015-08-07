@@ -23,16 +23,18 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.pikachu.emoji.utils.ResFinder;
+import com.pikachu.emoji.widget.EmojiTextView;
 
 /**
  * @author Hieu Rocker (rockerhieu@gmail.com)
+ * @author BinGoBinBin
  */
-class EmojiAdapter extends ArrayAdapter<EmojiBean> {
+public class EmojiAdapter extends ArrayAdapter<EmojiBean> {
 
     LayoutInflater mInflater;
 
     public EmojiAdapter(Context context, EmojiBean[] data) {
-        super(context, ResFinder.getLayout("umeng_comm_emoji_item"), data);
+        super(context, ResFinder.getLayout("emoji_item"), data);
         mInflater = LayoutInflater.from(context);
     }
 
@@ -40,7 +42,7 @@ class EmojiAdapter extends ArrayAdapter<EmojiBean> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = mInflater.inflate(ResFinder.getLayout("umeng_comm_emoji_item"), parent, false);
+            view = mInflater.inflate(ResFinder.getLayout("emoji_item"), parent, false);
             ViewHolder holder = new ViewHolder();
             holder.icon = (EmojiTextView) view;
             view.setTag(holder);

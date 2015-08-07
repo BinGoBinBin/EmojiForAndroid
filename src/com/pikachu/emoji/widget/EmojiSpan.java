@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pikachu.emoji;
+package com.pikachu.emoji.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -27,7 +27,7 @@ import java.lang.ref.WeakReference;
 /**
  * @author Hieu Rocker (rockerhieu@gmail.com)
  */
-class EmojiSpan extends DynamicDrawableSpan {
+public class EmojiSpan extends DynamicDrawableSpan {
 
     private final Context mContext;
 

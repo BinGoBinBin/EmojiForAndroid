@@ -22,9 +22,12 @@ import android.util.SparseIntArray;
 
 import com.pikachu.emoji.utils.ResFinder;
 import com.pikachu.emoji.utils.ResFinder.ResType;
+import com.pikachu.emoji.widget.EmojiSpan;
+import com.pikachu.emoji.widget.EmojiView;
 
 /**
  * @author Hieu Rocker (rockerhieu@gmail.com)
+ * @author BinGoBinBin
  */
 public final class EmojiHandler {
     private EmojiHandler() {
@@ -305,9 +308,9 @@ public final class EmojiHandler {
         }
 
         // It's delete icon
-        if (text.toString().equals(EmojiBorad.DELETE_KEY)) {
+        if (text.toString().equals(EmojiView.DELETE_KEY)) {
             text.setSpan(new EmojiSpan(context, sSoftbanksMap.get(DELETE_KEY), emojiSize,
-                    textSize), 0, EmojiBorad.DELETE_KEY.length(),
+                    textSize), 0, EmojiView.DELETE_KEY.length(),
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             return;
         }

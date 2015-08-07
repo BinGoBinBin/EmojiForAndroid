@@ -22,7 +22,7 @@
  * THE SOFTWARE.
  */
 
-package com.pikachu.emoji;
+package com.pikachu.emoji.widget;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -37,22 +37,25 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.BaseInputConnection;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.pikachu.emoji.EmojiBorad.OnEmojiItemClickListener;
+import com.pikachu.emoji.EmojiBean;
 import com.pikachu.emoji.utils.ResFinder;
 import com.pikachu.emoji.utils.ResFinder.ResType;
+import com.pikachu.emoji.widget.CommentEditText.EditTextBackEventListener;
+import com.pikachu.emoji.widget.EmojiView.OnEmojiItemClickListener;
 
 /**
  * 
  */
-public class EmojiView extends RelativeLayout {
+public class EmojiBoard extends RelativeLayout {
 
     private View mSendView;
     private ImageView mEmojiImageView;
     private CommentEditText mEditText;
-    private EmojiBorad mEmojiBoard;
+    private EmojiView mEmojiBoard;
 
     private int totalTime = 0;
     private boolean isFinish = false;
@@ -105,7 +108,7 @@ public class EmojiView extends RelativeLayout {
     /**
      * @param context
      */
-    public EmojiView(Context context) {
+    public EmojiBoard(Context context) {
         super(context);
         initView();
     }
@@ -114,7 +117,7 @@ public class EmojiView extends RelativeLayout {
      * @param context
      * @param attrs
      */
-    public EmojiView(Context context, AttributeSet attrs) {
+    public EmojiBoard(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
@@ -124,7 +127,7 @@ public class EmojiView extends RelativeLayout {
      * @param attrs
      * @param defStyleAttr
      */
-    public EmojiView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public EmojiBoard(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView();
     }
@@ -154,7 +157,7 @@ public class EmojiView extends RelativeLayout {
         mSendView = rootView.findViewById(ResFinder.getId("emoji_send"));
         mEmojiImageView = (ImageView) rootView.findViewById(ResFinder.getId("emoji_imageview"));
         mEditText = (CommentEditText) rootView.findViewById(ResFinder.getId("emoji_editview"));
-        mEmojiBoard = (EmojiBorad) rootView.findViewById(ResFinder.getId("emoji_board"));
+        mEmojiBoard = (EmojiView) rootView.findViewById(ResFinder.getId("emoji_board"));
         mEmojiIconRes = ResFinder.getResourceId(ResType.DRAWABLE, "emoji_icon");
         mEmojiKeyboardRes = ResFinder.getResourceId(ResType.DRAWABLE, "emoji_keyboard");
 
@@ -165,22 +168,9 @@ public class EmojiView extends RelativeLayout {
             @Override
             public void onClick(View v) {
                 if (mEmojiBoard.getVisibility() == View.VISIBLE) { // 显示输入法，隐藏表情board
-                    mEmojiBoard.setVisibility(View.GONE);
-                    mEmojiImageView.setImageResource(mEmojiIconRes);
-                    mActivity.getWindow().setSoftInputMode(
-                            WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
-                                    | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                    sendInputMethodMessage(INPUT_METHOD_SHOW, mEditText);
+                    executeHideEmojiBoard();
                 } else { // 隐藏输入法，显示表情board
-                    mEmojiImageView.setImageResource(mEmojiKeyboardRes);
-                    sendInputMethodMessage(INPUT_METHOD_DISMISS, mEditText);
-                    new Handler().postDelayed(new Runnable() {
-
-                        @Override
-                        public void run() {
-                            mEmojiBoard.setVisibility(View.VISIBLE);
-                        }
-                    }, 80);
+                    executeShowEmojiBoard();
                 }
             }
         });
@@ -191,7 +181,7 @@ public class EmojiView extends RelativeLayout {
             @Override
             public void onItemClick(EmojiBean emojiBean) {
                 // delete event
-                if (EmojiBorad.DELETE_KEY.equals(emojiBean.getEmoji())) {
+                if (EmojiView.DELETE_KEY.equals(emojiBean.getEmoji())) {
                     // 对于删除事件，此时模拟一个输入法上的删除事件达到删除的效果
                     // 【注意：此处不能调用delete方法，原因是emoji有些是单字符，有的是双字符】
                     mInputConnection.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN,
@@ -221,27 +211,113 @@ public class EmojiView extends RelativeLayout {
             }
         });
 
+        mEditText.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (mEmojiBoard.getVisibility() == View.VISIBLE) {
+                    mEmojiBoard.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        // 在表情面板显示的时候，触发返回时间后将隐藏面板
+        mEditText.setEditTextBackListener(new EditTextBackEventListener() {
+
+            @Override
+            public boolean onClickBack() {
+                boolean visiable = mEmojiBoard.getVisibility() == View.VISIBLE;
+                if (visiable) {
+                    mEmojiBoard.setVisibility(View.GONE);
+                    mEmojiImageView.setImageResource(mEmojiIconRes);
+                }
+                return visiable;
+            }
+        });
     }
 
-    public void setSendOnclickListener(OnClickListener onClickListener) throws Exception {
-        if (onClickListener == null) {
+    /**
+     * 显示输入法、隐藏表情面板</br>
+     */
+    private void executeHideEmojiBoard() {
+        mEmojiBoard.setVisibility(View.GONE);
+        mEmojiImageView.setImageResource(mEmojiIconRes);
+        mActivity.getWindow().setSoftInputMode(
+                WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
+                        | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        sendInputMethodMessage(INPUT_METHOD_SHOW, mEditText);
+    }
+
+    /**
+     * 隐藏输入法、显示表情面板</br>
+     */
+    private void executeShowEmojiBoard() {
+        mEmojiImageView.setImageResource(mEmojiKeyboardRes);
+        sendInputMethodMessage(INPUT_METHOD_DISMISS, mEditText);
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                mEmojiBoard.setVisibility(View.VISIBLE);
+            }
+        }, 80);
+    }
+
+    /**
+     * 设置点击发送按钮的回调</br>
+     * 
+     * @param listener 回调函数
+     * @throws Exception 如果listener 是空，则抛出异常
+     */
+    public void setOnSendListener(final OnSendClickListener listener) throws Exception {
+        if (listener == null) {
             throw new Exception("click event callback is null");
         }
-        mSendView.setOnClickListener(onClickListener);
+        mSendView.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                listener.onSendClick(mEditText.getText().toString());
+            }
+        });
     }
 
+    /**
+     * 重置{@linkplain EditText}的内容</br>
+     */
     public void resetEditText() {
         mEditText.setText("");
     }
 
+    /**
+     * 绑定Activity【TODO：考虑用其他方式替换】</br>
+     * 
+     * @param activity {@linkplain Activity}
+     */
     public void attachActivity(Activity activity) {
         this.mActivity = activity;
     }
 
-    protected void sendInputMethodMessage(int type, View view) {
+    private void sendInputMethodMessage(int type, View view) {
         Message message = mHandler.obtainMessage(type);
         message.obj = view;
         mHandler.sendMessage(message);
+    }
+
+    public interface OnSendClickListener {
+        /**
+         * 点击发送按钮时的回调</br>
+         * 
+         * @param text 编辑框的文本内容
+         */
+        public void onSendClick(String text);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mHandler.removeCallbacksAndMessages(null);
+        mActivity = null;
     }
 
 }
